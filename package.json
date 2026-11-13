@@ -1,0 +1,8 @@
+{
+  "name": "codespaces-trial",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.mjs"
+  }
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ プレビュー</title>
+<style>
+  body { margin: 0; background: #f3f7f9; color: #182935; font: 1rem/1.65 system-ui, sans-serif; }
+  main { max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; }
+  h1 { line-height: 1.2; }
+  input { box-sizing: border-box; display: block; width: 100%; padding: .65rem; margin-top: .25rem; font: inherit; }
+  article { padding: 1rem; margin-top: .75rem; background: #fff; border: 1px solid #d1dee6; border-radius: .5rem; }
+  article h2 { margin: 0; font-size: 1rem; }
+  article p { margin: .25rem 0 0; }
+</style>
+<main>
+  <h1>FAQ プレビュー</h1>
+  <p>サンプルのFAQを検索できます。</p>
+  <label>キーワード <input id="query" type="search" placeholder="例：見積もり"></label>
+  <section id="results" aria-label="検索結果" aria-live="polite"></section>
+</main>
+<script type="module">
+  const entries = [
+    { title: '見積もりを依頼したい', answer: '製品名と必要な数量を添えて、窓口にご連絡ください。' },
+    { title: '取扱説明書を探している', answer: '製品の型番を確認し、該当する説明書をお探しください。' },
+    { title: '納期を確認したい', answer: 'ご注文番号を添えて、窓口にお問い合わせください。' }
+  ];
+  const query = document.querySelector('#query');
+  const results = document.querySelector('#results');
+
+  function render() {
+    const keyword = query.value.trim().toLowerCase();
+    const matches = entries.filter(({ title, answer }) =>
+      `${title} ${answer}`.toLowerCase().includes(keyword)
+    );
+    results.replaceChildren();
+
+    if (matches.length === 0) {
+      results.textContent = '一致するFAQがありません。';
+      return;
+    }
+
+    for (const { title, answer } of matches) {
+      const article = document.createElement('article');
+      const heading = document.createElement('h2');
+      const paragraph = document.createElement('p');
+      heading.textContent = title;
+      paragraph.textContent = answer;
+      article.append(heading, paragraph);
+      results.append(article);
+    }
+  }
+
+  query.addEventListener('input', render);
+  render();
+</script>
+</html>
