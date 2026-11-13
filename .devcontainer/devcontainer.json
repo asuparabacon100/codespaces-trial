@@ -4,7 +4,9 @@
   "features": {
     "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
   },
-  "postStartCommand": "nohup npm run dev >/tmp/codespaces-trial.log 2>&1 </dev/null &",
+  "postAttachCommand": {
+    "preview": "npm run dev"
+  },
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
